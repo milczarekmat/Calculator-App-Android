@@ -21,7 +21,7 @@
 
 
     <Button
-        android:id="@+id/simpleBtn"
+        android:id="@+id/simpleCalculatorBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Simple"
@@ -31,20 +31,20 @@
         app:layout_constraintTop_toTopOf="@+id/guidelineH1" />
 
     <Button
-        android:id="@+id/aboutBtn"
+        android:id="@+id/advancedBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="About"
+        android:text="Advanced"
         app:layout_constraintBottom_toTopOf="@+id/guidelineH3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
         app:layout_constraintStart_toStartOf="@+id/guidelineV1"
         app:layout_constraintTop_toTopOf="@+id/guidelineH2" />
 
     <Button
-        android:id="@+id/advancedBtn"
+        android:id="@+id/aboutBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Advanded"
+        android:text="About"
         app:layout_constraintBottom_toTopOf="@+id/guidelineH4"
         app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
         app:layout_constraintStart_toStartOf="@+id/guidelineV1"
@@ -101,13 +101,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.33" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineV2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.67" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
