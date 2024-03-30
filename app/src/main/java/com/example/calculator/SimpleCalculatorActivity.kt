@@ -34,6 +34,7 @@ class SimpleCalculatorActivity : AppCompatActivity() {
     }
 
 //    TODO usuwanie resultTV.text po kliknięciu cyfry w trakcie wyswietlania wyniku
+//    TODO usuwanie koncowki result .0 po wyswieetleniu wyniku
 
     private fun handleOperatorClick(operator: String) {
         if (isInitState && binding.calculatorResultTV.text.isEmpty()) {
@@ -41,15 +42,14 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         }
 
         if (isOperatorInserted) {
-            if (binding.calculatorResultTV.text.isNotEmpty()) { // evaluate expression and insert new operator
-//                TODO warunek if fix
-                handleEqualsClick()
-                insertOperator(operator)
-                firstOperand = binding.calculatorResultTV.text.toString().toDouble()
-            } else { // replace operator
+            if (clearFlag) { // replace operator
                 val currentOperator = binding.calculatorOperatorTV.text.toString()
                 binding.calculatorOperatorTV.text =
                     currentOperator.replace(currentOperator.last(), operator[0])
+            } else { // evaluate expression and insert new operator
+                handleEqualsClick()
+                insertOperator(operator)
+                firstOperand = binding.calculatorResultTV.text.toString().toDouble()
             }
         } else {
             insertOperator(operator)
@@ -76,6 +76,11 @@ class SimpleCalculatorActivity : AppCompatActivity() {
 
     private fun handleDecimalClick() {
         val currentText = binding.calculatorResultTV.text.toString()
+
+        if (currentText.contains(".")) {
+            return
+        }
+
         if (currentText.isEmpty() || isOperatorInserted) {
             binding.calculatorResultTV.append("0.")
         } else {
