@@ -14,6 +14,7 @@ abstract class ViewManagerStrategy {
     abstract fun clearMainTextView()
     abstract fun clearOperator()
     abstract fun isOperatorInserted(): Boolean
+    abstract fun getBinding(): Any
 
     fun isInitState(): Boolean {
         return isInitState

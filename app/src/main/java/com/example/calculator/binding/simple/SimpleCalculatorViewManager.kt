@@ -41,4 +41,8 @@ class SimpleCalculatorViewManager(
     override fun isOperatorInserted(): Boolean {
         return binding.calculatorOperatorTV.text.isNotEmpty()
     }
+
+    override fun getBinding(): Any {
+        return binding
+    }
 }
