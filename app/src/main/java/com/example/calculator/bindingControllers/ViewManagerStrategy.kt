@@ -1,4 +1,4 @@
-package com.example.calculator.binding
+package com.example.calculator.bindingControllers
 
 abstract class ViewManagerStrategy {
     private var isInitState: Boolean = true

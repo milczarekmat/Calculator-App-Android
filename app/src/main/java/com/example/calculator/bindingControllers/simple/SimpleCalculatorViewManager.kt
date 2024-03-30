@@ -1,6 +1,6 @@
-package com.example.calculator.binding.simple
+package com.example.calculator.bindingControllers.simple
 
-import com.example.calculator.binding.ViewManagerStrategy
+import com.example.calculator.bindingControllers.ViewManagerStrategy
 import com.example.calculator.databinding.ActivitySimpleCalculatorBinding
 
 class SimpleCalculatorViewManager(

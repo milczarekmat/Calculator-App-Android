@@ -1,12 +1,13 @@
-package com.example.calculator.listener
+package com.example.calculator.listener.advanced
 
-import com.example.calculator.binding.ViewManagerStrategy
-import com.example.calculator.databinding.ActivitySimpleCalculatorBinding
+import com.example.calculator.bindingControllers.ViewManagerStrategy
+import com.example.calculator.databinding.ActivityAdvancedCalculatorBinding
 import com.example.calculator.logic.CalculatorLogic
 
-class CalculatorClickListener(private val calculatorViewManager: ViewManagerStrategy) {
+class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewManagerStrategy) {
 
-    private lateinit var binding: ActivitySimpleCalculatorBinding
+    private val binding: ActivityAdvancedCalculatorBinding =
+        calculatorViewManager.getBinding() as ActivityAdvancedCalculatorBinding
     private var firstOperand: Double = 0.0
     private val calculatorLogic = CalculatorLogic()
 
@@ -166,7 +167,6 @@ class CalculatorClickListener(private val calculatorViewManager: ViewManagerStra
     }
 
     fun setUpListeners() {
-        binding = calculatorViewManager.getBinding() as ActivitySimpleCalculatorBinding
         binding.oneBtn.setOnClickListener {
             handleDigitClick("1")
         }
