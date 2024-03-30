@@ -20,15 +20,15 @@
     <TextView
         android:id="@+id/calculatorResultTV"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/back"
         android:text=""
         android:textAlignment="textEnd"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayoutOuter"
+        android:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <LinearLayout
         android:id="@+id/linearLayoutOuter"
@@ -50,22 +50,27 @@
             <Button
                 android:id="@+id/CEbtn"
                 style="@style/calculatorBtn"
+                android:backgroundTint="@color/gray"
                 android:text="C/CE" />
 
             <Button
                 android:id="@+id/ACbtn"
                 style="@style/calculatorBtn"
+                android:backgroundTint="@color/gray"
                 android:text="AC" />
+
+            <Button
+                android:id="@+id/backspaceBtn"
+                style="@style/calculatorBtn"
+                android:backgroundTint="@color/gray"
+                android:text="⌫" />
 
             <Button
                 android:id="@+id/divideBtn"
                 style="@style/calculatorBtn"
                 android:text="/" />
 
-            <Button
-                android:id="@+id/backspaceBtn"
-                style="@style/calculatorBtn"
-                android:text="⌫" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -182,13 +187,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.26" />
+        app:layout_constraintGuide_percent="0.22" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.96" />
+        app:layout_constraintGuide_percent="0.94" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.16" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
