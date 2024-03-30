@@ -1,7 +1,6 @@
 package com.example.calculator
 
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculator.databinding.ActivitySimpleCalculatorBinding
@@ -12,8 +11,10 @@ class SimpleCalculatorActivity : AppCompatActivity() {
 
     private var isOperatorInserted = false
     private var isInitState = true
+    private var newOperationFlag = false
+    private var CEClearAll = false
     private var firstOperand: Double = 0.0
-    private var clearFlag = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySimpleCalculatorBinding.inflate(layoutInflater)
@@ -24,17 +25,13 @@ class SimpleCalculatorActivity : AppCompatActivity() {
     }
 
     private fun handleDigitClick(digit: String) {
-        if (clearFlag) {
+        if (newOperationFlag) {
             binding.calculatorResultTV.text = ""
-            clearFlag = false
-//            isOperatorInserted = false
+            newOperationFlag = false
         }
         binding.calculatorResultTV.append(digit)
-//        binding.calculatorOperatorTV.text = "" TODO usuwanie znaku dopiero po wykonaniu equals
+        CEClearAll = false
     }
-
-//    TODO usuwanie resultTV.text po kliknięciu cyfry w trakcie wyswietlania wyniku
-//    TODO usuwanie koncowki result .0 po wyswieetleniu wyniku
 
     private fun handleOperatorClick(operator: String) {
         if (isInitState && binding.calculatorResultTV.text.isEmpty()) {
@@ -42,7 +39,7 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         }
 
         if (isOperatorInserted) {
-            if (clearFlag) { // replace operator
+            if (newOperationFlag) { // replace operator
                 val currentOperator = binding.calculatorOperatorTV.text.toString()
                 binding.calculatorOperatorTV.text =
                     currentOperator.replace(currentOperator.last(), operator[0])
@@ -62,7 +59,7 @@ class SimpleCalculatorActivity : AppCompatActivity() {
 
         isOperatorInserted = true
         isInitState = false
-        clearFlag = true
+        newOperationFlag = true
     }
 
     private fun clearAndSaveOperand() {
@@ -71,7 +68,6 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         }
 
         firstOperand = binding.calculatorResultTV.text.toString().toDouble()
-//        binding.calculatorResultTV.text = ""
     }
 
     private fun handleDecimalClick() {
@@ -80,6 +76,8 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         if (currentText.contains(".")) {
             return
         }
+
+        CEClearAll = false
 
         if (currentText.isEmpty() || isOperatorInserted) {
             binding.calculatorResultTV.append("0.")
@@ -141,17 +139,47 @@ class SimpleCalculatorActivity : AppCompatActivity() {
             binding.calculatorOperatorTV.text.toString()
         )
 
-        binding.calculatorResultTV.text = result.toString()
+        if (result % 1.0 == 0.0) {
+            binding.calculatorResultTV.text = result.toInt().toString()
+        } else {
+            binding.calculatorResultTV.text = result.toString()
+        }
+
         firstOperand = result
 
         isOperatorInserted = false
-        clearFlag = true
+        newOperationFlag = true
         binding.calculatorOperatorTV.text = ""
     }
 
-    private fun setUpListeners() {
-        val CEbtn = findViewById<Button>(R.id.CEbtn)
+    private fun clearAll() {
+        binding.calculatorResultTV.text = ""
+        binding.calculatorOperatorTV.text = ""
+        firstOperand = 0.0
+        isOperatorInserted = false
+        isInitState = true
+        newOperationFlag = false
+        CEClearAll = false
+    }
 
+    private fun handleCEClick() {
+        if (CEClearAll) {
+            clearAll()
+            return
+        }
+
+        if (newOperationFlag) {
+            return
+        }
+
+        if (binding.calculatorResultTV.text.isNotEmpty()) {
+            binding.calculatorResultTV.text = ""
+        }
+        CEClearAll = true
+
+    }
+
+    private fun setUpListeners() {
         binding.oneBtn.setOnClickListener {
             handleDigitClick("1")
         }
@@ -217,16 +245,11 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         }
 
         binding.ACbtn.setOnClickListener {
-            binding.calculatorResultTV.text = ""
-            binding.calculatorOperatorTV.text = ""
-            firstOperand = 0.0
-            isOperatorInserted = false
-            isInitState = true
-            clearFlag = false
+            clearAll()
         }
 
         binding.CEbtn.setOnClickListener {
-//            resultTV.text = ""
+            handleCEClick()
         }
 
         binding.decimalBtn.setOnClickListener {
