@@ -61,6 +61,11 @@ class CalculatorClickListener(private val calculatorViewManager: ViewManagerStra
     }
 
     private fun handleDecimalClick() {
+        if (calculatorViewManager.isNewOperation()) {
+            calculatorViewManager.setMainTextView("0.")
+            calculatorViewManager.setIsNewOperation(false)
+        }
+
         if (calculatorViewManager.getCurrentMainText().contains(".")) {
             return
         }
@@ -199,7 +204,9 @@ class CalculatorClickListener(private val calculatorViewManager: ViewManagerStra
         }
 
         binding.zeroBtn.setOnClickListener {
-            handleDigitClick("0")
+            if (!calculatorViewManager.isMainTextViewEmpty() && !calculatorViewManager.isNewOperation()) {
+                handleDigitClick("0")
+            }
         }
 
         binding.addBtn.setOnClickListener {
