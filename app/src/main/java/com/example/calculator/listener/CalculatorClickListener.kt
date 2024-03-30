@@ -67,7 +67,7 @@ class CalculatorClickListener(private val calculatorViewManager: ViewManagerStra
 
         calculatorViewManager.setIsEntryClearPressed(false)
 
-        if (calculatorViewManager.isMainTextViewEmpty() || calculatorViewManager.isOperatorInserted()) {
+        if (calculatorViewManager.isMainTextViewEmpty()) {
             calculatorViewManager.appendMainTextView("0.")
         } else {
             calculatorViewManager.appendMainTextView(".")
