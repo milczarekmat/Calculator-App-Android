@@ -5,15 +5,64 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculator.databinding.ActivitySimpleCalculatorBinding
 
-class SimpleCalculatorActivity : AppCompatActivity() {
 
+interface BindingStrategy {
+    fun setMainTextView(value: String)
+    fun appendMainTextView(value: String)
+    fun setOperator(value: String)
+    fun isMainTextViewEmpty(): Boolean
+    fun getCurrentMainText(): String
+    fun getCurrentOperator(): String
+    fun clearMainTextView()
+    fun clearOperator()
+
+}
+
+class SimpleCalculatorViewManager(private val binding: ActivitySimpleCalculatorBinding) :
+    BindingStrategy {
+    override fun setMainTextView(value: String) {
+        binding.calculatorResultTV.text = value
+    }
+
+    override fun appendMainTextView(value: String) {
+        binding.calculatorResultTV.append(value)
+    }
+
+    override fun setOperator(value: String) {
+        binding.calculatorOperatorTV.text = value
+    }
+
+    override fun isMainTextViewEmpty(): Boolean {
+        return binding.calculatorResultTV.text.isEmpty()
+    }
+
+    override fun getCurrentMainText(): String {
+        return binding.calculatorResultTV.text.toString()
+    }
+
+    override fun getCurrentOperator(): String {
+        return binding.calculatorOperatorTV.text.toString()
+    }
+
+    override fun clearMainTextView() {
+        binding.calculatorResultTV.text = ""
+    }
+
+    override fun clearOperator() {
+        binding.calculatorOperatorTV.text = ""
+    }
+}
+
+class SimpleCalculatorActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySimpleCalculatorBinding
 
     private var isOperatorInserted = false
     private var isInitState = true
     private var newOperationFlag = false
-    private var CEClearAll = false
+    private var isEntryCleared = false
     private var firstOperand: Double = 0.0
+
+    private lateinit var calculatorViewManager: BindingStrategy
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,32 +70,39 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
+        calculatorViewManager = SimpleCalculatorViewManager(binding)
+
         setUpListeners()
     }
 
     private fun handleDigitClick(digit: String) {
         if (newOperationFlag) {
-            binding.calculatorResultTV.text = ""
+            calculatorViewManager.clearMainTextView()
             newOperationFlag = false
         }
-        binding.calculatorResultTV.append(digit)
-        CEClearAll = false
+        calculatorViewManager.appendMainTextView(digit)
+        isEntryCleared = false
     }
 
     private fun handleOperatorClick(operator: String) {
-        if (isInitState && binding.calculatorResultTV.text.isEmpty()) {
+        if (isInitState && calculatorViewManager.isMainTextViewEmpty()) {
             return
         }
 
         if (isOperatorInserted) {
             if (newOperationFlag) { // replace operator
-                val currentOperator = binding.calculatorOperatorTV.text.toString()
-                binding.calculatorOperatorTV.text =
-                    currentOperator.replace(currentOperator.last(), operator[0])
+                val currentOperator = calculatorViewManager.getCurrentOperator()
+                calculatorViewManager.setOperator(
+                    currentOperator.replace(
+                        currentOperator.last(),
+                        operator[0]
+                    )
+                )
+
             } else { // evaluate expression and insert new operator
                 handleEqualsClick()
                 insertOperator(operator)
-                firstOperand = binding.calculatorResultTV.text.toString().toDouble()
+                firstOperand = calculatorViewManager.getCurrentMainText().toDouble()
             }
         } else {
             insertOperator(operator)
@@ -55,7 +111,7 @@ class SimpleCalculatorActivity : AppCompatActivity() {
     }
 
     private fun insertOperator(operator: String) {
-        binding.calculatorOperatorTV.append(operator)
+        calculatorViewManager.setOperator(operator)
 
         isOperatorInserted = true
         isInitState = false
@@ -63,51 +119,59 @@ class SimpleCalculatorActivity : AppCompatActivity() {
     }
 
     private fun clearAndSaveOperand() {
-        if (binding.calculatorResultTV.text.isEmpty()) {
+        if (calculatorViewManager.isMainTextViewEmpty()) {
             return
         }
 
-        firstOperand = binding.calculatorResultTV.text.toString().toDouble()
+        firstOperand = calculatorViewManager.getCurrentMainText().toDouble()
     }
 
     private fun handleDecimalClick() {
-        val currentText = binding.calculatorResultTV.text.toString()
-
-        if (currentText.contains(".")) {
+        if (calculatorViewManager.getCurrentMainText().contains(".")) {
             return
         }
 
-        CEClearAll = false
+        isEntryCleared = false
 
-        if (currentText.isEmpty() || isOperatorInserted) {
-            binding.calculatorResultTV.append("0.")
+        if (calculatorViewManager.isMainTextViewEmpty() || isOperatorInserted) {
+            calculatorViewManager.appendMainTextView("0.")
         } else {
-            binding.calculatorResultTV.append(".")
+            calculatorViewManager.appendMainTextView(".")
         }
     }
 
     private fun handleBackSpaceClick() {
-        val resultTV = binding.calculatorResultTV
-        if (resultTV.text.isNotEmpty()) {
-            binding.calculatorResultTV.text = resultTV.text.substring(0, resultTV.text.length - 1)
-            if (resultTV.text.isNotEmpty() && resultTV.text.toString().last() == '.') {
-                resultTV.text = resultTV.text.substring(0, resultTV.text.length - 1)
-            }
+        if (calculatorViewManager.isMainTextViewEmpty()) {
+            return
         }
 
-        if (resultTV.text.isEmpty()) {
-            isInitState = true
+        val mainText = calculatorViewManager.getCurrentMainText()
+
+        calculatorViewManager.setMainTextView(
+            mainText.substring(0, mainText.length - 1)
+        )
+
+        if (!calculatorViewManager.isMainTextViewEmpty() && mainText.last() == '.') {
+            calculatorViewManager.setMainTextView(mainText.substring(0, mainText.length - 1))
+        }
+
+        if (calculatorViewManager.getCurrentMainText().isEmpty()) {
+            if (newOperationFlag) {
+                clearAll()
+            } else {
+                clearEntry()
+            }
         }
     }
 
     private fun handleSignClick() {
-        val currentText = binding.calculatorResultTV.text.toString()
+        val currentText = calculatorViewManager.getCurrentMainText()
         if (currentText.isNotEmpty()) {
             val firstChar = currentText[0]
             if (firstChar == '-') {
-                binding.calculatorResultTV.text = currentText.substring(1)
+                calculatorViewManager.setMainTextView(currentText.substring(1))
             } else {
-                binding.calculatorResultTV.text = "-$currentText"
+                calculatorViewManager.setMainTextView("-$currentText")
             }
         }
     }
@@ -127,43 +191,43 @@ class SimpleCalculatorActivity : AppCompatActivity() {
     }
 
     private fun handleEqualsClick() {
-        if (binding.calculatorOperatorTV.text.isEmpty()) {
+        if (calculatorViewManager.isMainTextViewEmpty()) {
             return
         }
 
-        val secondOperand = binding.calculatorResultTV.text.toString().toDouble()
+        val secondOperand = calculatorViewManager.getCurrentMainText().toDouble()
 
         val result = evaluateExpression(
             firstOperand,
             secondOperand,
-            binding.calculatorOperatorTV.text.toString()
+            calculatorViewManager.getCurrentOperator()
         )
 
         if (result % 1.0 == 0.0) {
-            binding.calculatorResultTV.text = result.toInt().toString()
+            calculatorViewManager.setMainTextView(result.toInt().toString())
         } else {
-            binding.calculatorResultTV.text = result.toString()
+            calculatorViewManager.setMainTextView(result.toString())
         }
 
         firstOperand = result
 
         isOperatorInserted = false
         newOperationFlag = true
-        binding.calculatorOperatorTV.text = ""
+        calculatorViewManager.clearOperator()
     }
 
     private fun clearAll() {
-        binding.calculatorResultTV.text = ""
-        binding.calculatorOperatorTV.text = ""
+        calculatorViewManager.clearMainTextView()
+        calculatorViewManager.clearOperator()
         firstOperand = 0.0
         isOperatorInserted = false
         isInitState = true
         newOperationFlag = false
-        CEClearAll = false
+        isEntryCleared = false
     }
 
-    private fun handleCEClick() {
-        if (CEClearAll) {
+    private fun clearEntry() {
+        if (isEntryCleared) {
             clearAll()
             return
         }
@@ -172,11 +236,11 @@ class SimpleCalculatorActivity : AppCompatActivity() {
             return
         }
 
-        if (binding.calculatorResultTV.text.isNotEmpty()) {
-            binding.calculatorResultTV.text = ""
+        if (!calculatorViewManager.isMainTextViewEmpty()) {
+            calculatorViewManager.clearMainTextView()
         }
-        CEClearAll = true
 
+        isEntryCleared = true
     }
 
     private fun setUpListeners() {
@@ -249,7 +313,7 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         }
 
         binding.CEbtn.setOnClickListener {
-            handleCEClick()
+            clearEntry()
         }
 
         binding.decimalBtn.setOnClickListener {

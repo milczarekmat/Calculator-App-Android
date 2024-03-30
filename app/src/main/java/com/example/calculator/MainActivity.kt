@@ -2,31 +2,35 @@ package com.example.calculator
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.calculator.databinding.ActivityMainBinding
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         setUpListeners()
     }
 
     private fun setUpListeners() {
-        val simpleCalculatorBtn = findViewById<Button>(R.id.simpleCalculatorBtn)
-
-        simpleCalculatorBtn.setOnClickListener {
+        binding.simpleCalculatorBtn.setOnClickListener {
             val intent = Intent(this, SimpleCalculatorActivity::class.java)
             startActivity(intent)
         }
 
-        val exitBtn = findViewById<Button>(R.id.exitBtn)
+        binding.advancedBtn.setOnClickListener {
+            val intent = Intent(this, AdvancedCalculatorActivity::class.java)
+            startActivity(intent)
+        }
 
-        exitBtn.setOnClickListener {
+        binding.exitBtn.setOnClickListener {
             finishAffinity()
             exitProcess(0)
         }
