@@ -23,6 +23,6 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         calculatorViewManager = SimpleCalculatorViewManager(binding)
 
         simpleCalculatorClickListener = SimpleCalculatorClickListener(calculatorViewManager)
-        simpleCalculatorClickListener.setUpListeners()
+        simpleCalculatorClickListener.setUpSimpleCalculatorListeners()
     }
 }

@@ -4,14 +4,18 @@ import com.example.calculator.bindingControllers.ViewManagerStrategy
 import com.example.calculator.databinding.ActivitySimpleCalculatorBinding
 import com.example.calculator.logic.CalculatorLogic
 
-class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManagerStrategy) {
-
-    private val binding: ActivitySimpleCalculatorBinding =
-        calculatorViewManager.getBinding() as ActivitySimpleCalculatorBinding
+open class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManagerStrategy) {
+    private lateinit var binding: ActivitySimpleCalculatorBinding
     private var firstOperand: Double = 0.0
     private val calculatorLogic = CalculatorLogic()
 
-    private fun handleDigitClick(digit: String) {
+    init {
+        if (calculatorViewManager.getBinding() is ActivitySimpleCalculatorBinding) {
+            binding = calculatorViewManager.getBinding() as ActivitySimpleCalculatorBinding
+        }
+    }
+
+    protected fun handleDigitClick(digit: String) {
         if (calculatorViewManager.isNewOperation()) {
             calculatorViewManager.clearMainTextView()
             calculatorViewManager.setIsNewOperation(false)
@@ -20,7 +24,7 @@ class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManag
         calculatorViewManager.setIsEntryClearPressed(false)
     }
 
-    private fun handleOperatorClick(operator: String) {
+    protected fun handleOperatorClick(operator: String) {
         if (calculatorViewManager.isInitState() && calculatorViewManager.isMainTextViewEmpty()) {
             return
         }
@@ -61,7 +65,7 @@ class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManag
         firstOperand = calculatorViewManager.getCurrentMainText().toDouble()
     }
 
-    private fun handleDecimalClick() {
+    protected fun handleDecimalClick() {
         if (calculatorViewManager.isNewOperation()) {
             calculatorViewManager.setMainTextView("0.")
             calculatorViewManager.setIsNewOperation(false)
@@ -80,7 +84,7 @@ class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManag
         }
     }
 
-    private fun handleBackSpaceClick() {
+    protected fun handleBackSpaceClick() {
         if (calculatorViewManager.isMainTextViewEmpty()) {
             return
         }
@@ -104,7 +108,7 @@ class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManag
         }
     }
 
-    private fun handleSignClick() {
+    protected fun handleSignClick() {
         val currentText = calculatorViewManager.getCurrentMainText()
         if (currentText.isNotEmpty()) {
             val firstChar = currentText[0]
@@ -116,7 +120,7 @@ class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManag
         }
     }
 
-    private fun handleEqualsClick() {
+    protected fun handleEqualsClick() {
         if (calculatorViewManager.isMainTextViewEmpty()) {
             return
         }
@@ -140,7 +144,7 @@ class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManag
         calculatorViewManager.clearOperator()
     }
 
-    private fun clearAll() {
+    protected fun clearAll() {
         calculatorViewManager.clearMainTextView()
         calculatorViewManager.clearOperator()
         calculatorViewManager.setIsInitState(true)
@@ -149,7 +153,7 @@ class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManag
         firstOperand = 0.0
     }
 
-    private fun clearEntry() {
+    protected fun clearEntry() {
         if (calculatorViewManager.isEntryClearPressed()) {
             clearAll()
             return
@@ -166,7 +170,7 @@ class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManag
         calculatorViewManager.setIsEntryClearPressed(true)
     }
 
-    fun setUpListeners() {
+    open fun setUpSimpleCalculatorListeners() {
         binding.oneBtn.setOnClickListener {
             handleDigitClick("1")
         }

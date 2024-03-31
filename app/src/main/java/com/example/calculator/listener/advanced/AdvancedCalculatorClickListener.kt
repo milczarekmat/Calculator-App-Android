@@ -2,171 +2,14 @@ package com.example.calculator.listener.advanced
 
 import com.example.calculator.bindingControllers.ViewManagerStrategy
 import com.example.calculator.databinding.ActivityAdvancedCalculatorBinding
-import com.example.calculator.logic.CalculatorLogic
+import com.example.calculator.listener.simple.SimpleCalculatorClickListener
 
-class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewManagerStrategy) {
+class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewManagerStrategy): SimpleCalculatorClickListener(calculatorViewManager) {
 
     private val binding: ActivityAdvancedCalculatorBinding =
         calculatorViewManager.getBinding() as ActivityAdvancedCalculatorBinding
-    private var firstOperand: Double = 0.0
-    private val calculatorLogic = CalculatorLogic()
 
-    private fun handleDigitClick(digit: String) {
-        if (calculatorViewManager.isNewOperation()) {
-            calculatorViewManager.clearMainTextView()
-            calculatorViewManager.setIsNewOperation(false)
-        }
-        calculatorViewManager.appendMainTextView(digit)
-        calculatorViewManager.setIsEntryClearPressed(false)
-    }
-
-    private fun handleOperatorClick(operator: String) {
-        if (calculatorViewManager.isInitState() && calculatorViewManager.isMainTextViewEmpty()) {
-            return
-        }
-
-        if (calculatorViewManager.isOperatorInserted()) {
-            if (calculatorViewManager.isNewOperation()) { // replace operator
-                val currentOperator = calculatorViewManager.getCurrentOperator()
-                calculatorViewManager.setOperator(
-                    currentOperator.replace(
-                        currentOperator.last(),
-                        operator[0]
-                    )
-                )
-
-            } else { // evaluate expression and insert new operator
-                handleEqualsClick()
-                insertOperator(operator)
-                firstOperand = calculatorViewManager.getCurrentMainText().toDouble()
-            }
-        } else {
-            insertOperator(operator)
-            clearAndSaveOperand()
-        }
-    }
-
-    private fun insertOperator(operator: String) {
-        calculatorViewManager.setOperator(operator)
-
-        calculatorViewManager.setIsInitState(false)
-        calculatorViewManager.setIsNewOperation(true)
-    }
-
-    private fun clearAndSaveOperand() {
-        if (calculatorViewManager.isMainTextViewEmpty()) {
-            return
-        }
-
-        firstOperand = calculatorViewManager.getCurrentMainText().toDouble()
-    }
-
-    private fun handleDecimalClick() {
-        if (calculatorViewManager.isNewOperation()) {
-            calculatorViewManager.setMainTextView("0.")
-            calculatorViewManager.setIsNewOperation(false)
-        }
-
-        if (calculatorViewManager.getCurrentMainText().contains(".")) {
-            return
-        }
-
-        calculatorViewManager.setIsEntryClearPressed(false)
-
-        if (calculatorViewManager.isMainTextViewEmpty()) {
-            calculatorViewManager.appendMainTextView("0.")
-        } else {
-            calculatorViewManager.appendMainTextView(".")
-        }
-    }
-
-    private fun handleBackSpaceClick() {
-        if (calculatorViewManager.isMainTextViewEmpty()) {
-            return
-        }
-
-        val mainText = calculatorViewManager.getCurrentMainText()
-
-        calculatorViewManager.setMainTextView(
-            mainText.substring(0, mainText.length - 1)
-        )
-
-        if (!calculatorViewManager.isMainTextViewEmpty() && mainText.last() == '.') {
-            calculatorViewManager.setMainTextView(mainText.substring(0, mainText.length - 1))
-        }
-
-        if (calculatorViewManager.getCurrentMainText().isEmpty()) {
-            if (calculatorViewManager.isNewOperation()) {
-                clearAll()
-            } else {
-                clearEntry()
-            }
-        }
-    }
-
-    private fun handleSignClick() {
-        val currentText = calculatorViewManager.getCurrentMainText()
-        if (currentText.isNotEmpty()) {
-            val firstChar = currentText[0]
-            if (firstChar == '-') {
-                calculatorViewManager.setMainTextView(currentText.substring(1))
-            } else {
-                calculatorViewManager.setMainTextView("-$currentText")
-            }
-        }
-    }
-
-    private fun handleEqualsClick() {
-        if (calculatorViewManager.isMainTextViewEmpty()) {
-            return
-        }
-
-        val secondOperand = calculatorViewManager.getCurrentMainText().toDouble()
-
-        val result = calculatorLogic.evaluateExpression(
-            firstOperand,
-            secondOperand,
-            calculatorViewManager.getCurrentOperator()
-        )
-
-        if (result % 1.0 == 0.0) {
-            calculatorViewManager.setMainTextView(result.toInt().toString())
-        } else {
-            calculatorViewManager.setMainTextView(result.toString())
-        }
-
-        firstOperand = result
-        calculatorViewManager.setIsNewOperation(true)
-        calculatorViewManager.clearOperator()
-    }
-
-    private fun clearAll() {
-        calculatorViewManager.clearMainTextView()
-        calculatorViewManager.clearOperator()
-        calculatorViewManager.setIsInitState(true)
-        calculatorViewManager.setIsNewOperation(false)
-        calculatorViewManager.setIsEntryClearPressed(false)
-        firstOperand = 0.0
-    }
-
-    private fun clearEntry() {
-        if (calculatorViewManager.isEntryClearPressed()) {
-            clearAll()
-            return
-        }
-
-        if (calculatorViewManager.isNewOperation()) {
-            return
-        }
-
-        if (!calculatorViewManager.isMainTextViewEmpty()) {
-            calculatorViewManager.clearMainTextView()
-        }
-
-        calculatorViewManager.setIsEntryClearPressed(true)
-    }
-
-    fun setUpListeners() {
+    override fun setUpSimpleCalculatorListeners() {
         binding.oneBtn.setOnClickListener {
             handleDigitClick("1")
         }
@@ -248,6 +91,44 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         binding.signBtn.setOnClickListener {
             handleSignClick()
         }
+    }
+
+    fun setUpAdvancedCalculatorListeners() {
+//        binding.sinBtn.setOnClickListener {
+//            handleSinClick()
+//        }
+//
+//        binding.cosBtn.setOnClickListener {
+//            handleCosClick()
+//        }
+//
+//        binding.tanBtn.setOnClickListener {
+//            handleTanClick()
+//        }
+//
+//        binding.logBtn.setOnClickListener {
+//            handleLogClick()
+//        }
+//
+//        binding.lnBtn.setOnClickListener {
+//            handleLnClick()
+//        }
+//
+//        binding.sqrtBtn.setOnClickListener {
+//            handleSqrtClick()
+//        }
+//
+//        binding.powBtn.setOnClickListener {
+//            handlePowClick()
+//        }
+//
+//        binding.piBtn.setOnClickListener {
+//            handlePiClick()
+//        }
+//
+//        binding.eBtn.setOnClickListener {
+//            handleEClick()
+//        }
     }
 
 }
