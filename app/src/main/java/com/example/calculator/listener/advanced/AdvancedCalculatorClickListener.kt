@@ -138,6 +138,10 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         }
     }
 
+    private fun setResult(result: Double) {
+        calculatorViewManager.setMainTextView(cutDecimalPartIfInteger(result))
+    }
+
     private fun handlePowerClick() {
         if (calculatorViewManager.isMainTextViewEmpty()) {
             return
@@ -155,7 +159,7 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         val result = value * value
 
-        calculatorViewManager.setMainTextView(result.toString())
+        setResult(result)
     }
 
     private fun handlePercentClick() {
@@ -166,7 +170,7 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         val result = value / 100
 
-        calculatorViewManager.setMainTextView(result.toString())
+        setResult(result)
     }
 
     private fun handleSqrtClick() {
@@ -177,7 +181,7 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         val result = sqrt(value)
 
-        calculatorViewManager.setMainTextView(result.toString())
+        setResult(result)
     }
 
     private fun handleLnClick() {
@@ -188,7 +192,7 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         val result = ln(value)
 
-        calculatorViewManager.setMainTextView(result.toString())
+        setResult(result)
     }
 
     private fun handleLogClick() {
@@ -199,7 +203,7 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         val result = log10(value)
 
-        calculatorViewManager.setMainTextView(result.toString())
+        setResult(result)
     }
 
     private fun handleTanClick() {
@@ -210,7 +214,7 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         val result = tan(value)
 
-        calculatorViewManager.setMainTextView(result.toString())
+        setResult(result)
     }
 
     private fun handleCosClick() {
@@ -221,7 +225,7 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         val result = cos(value)
 
-        calculatorViewManager.setMainTextView(result.toString())
+        setResult(result)
     }
 
     private fun handleSinClick() {
@@ -232,7 +236,7 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         val result = sin(value)
 
-        calculatorViewManager.setMainTextView(result.toString())
+        setResult(result)
     }
 
 }

@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.aboutBtn.setOnClickListener {
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.exitBtn.setOnClickListener {
             finishAffinity()
             exitProcess(0)
