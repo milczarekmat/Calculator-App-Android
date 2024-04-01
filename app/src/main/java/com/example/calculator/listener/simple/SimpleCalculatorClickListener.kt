@@ -24,6 +24,10 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: View
         calculatorViewManager.setIsEntryClearPressed(false)
     }
 
+    protected fun getFirstOperand(): Double {
+        return firstOperand
+    }
+
     protected fun handleOperatorClick(operator: String) {
         if (calculatorViewManager.isInitState() && calculatorViewManager.isMainTextViewEmpty()) {
             return
@@ -57,7 +61,7 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: View
         calculatorViewManager.setIsNewOperation(true)
     }
 
-    private fun clearAndSaveOperand() {
+    protected fun clearAndSaveOperand() {
         if (calculatorViewManager.isMainTextViewEmpty()) {
             return
         }
@@ -133,15 +137,17 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: View
             calculatorViewManager.getCurrentOperator()
         )
 
-        if (result % 1.0 == 0.0) {
-            calculatorViewManager.setMainTextView(result.toInt().toString())
-        } else {
-            calculatorViewManager.setMainTextView(result.toString())
-        }
+        val resultStr = cutDecimalPartIfInteger(result)
+
+        calculatorViewManager.setMainTextView(resultStr)
 
         firstOperand = result
         calculatorViewManager.setIsNewOperation(true)
         calculatorViewManager.clearOperator()
+    }
+
+    protected fun cutDecimalPartIfInteger(result: Double): String {
+        return if (result % 1.0 == 0.0) result.toInt().toString() else result.toString()
     }
 
     protected fun clearAll() {

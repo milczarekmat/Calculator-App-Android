@@ -23,5 +23,6 @@ class AdvancedCalculatorActivity : AppCompatActivity() {
 
         calculatorClickListener = AdvancedCalculatorClickListener(calculatorViewManager)
         calculatorClickListener.setUpSimpleCalculatorListeners()
+        calculatorClickListener.setUpAdvancedCalculatorListeners()
     }
 }

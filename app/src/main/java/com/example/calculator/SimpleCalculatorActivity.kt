@@ -13,7 +13,6 @@ class SimpleCalculatorActivity : AppCompatActivity() {
     private lateinit var calculatorViewManager: ViewManagerStrategy
     private lateinit var simpleCalculatorClickListener: SimpleCalculatorClickListener
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySimpleCalculatorBinding.inflate(layoutInflater)

@@ -140,7 +140,7 @@
             <Button
                 android:id="@+id/powerBtn"
                 style="@style/calculatorBtn"
-                android:text="x^2" />
+                android:text="x^y" />
         </LinearLayout>
 
         <LinearLayout
@@ -165,7 +165,7 @@
                 android:text="9" />
 
             <Button
-                android:id="@+id/btn01"
+                android:id="@+id/sinBtn"
                 style="@style/calculatorBtn"
                 android:text="sin" />
 
@@ -267,13 +267,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.08" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
