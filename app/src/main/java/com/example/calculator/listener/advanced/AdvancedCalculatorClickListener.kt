@@ -147,7 +147,9 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewMan
             return
         }
 
-        clearAndSaveOperand()
+        saveOperand()
+        calculatorViewManager.clearMainTextView()
+        calculatorViewManager.setIsInitState(false)
         handleOperatorClick("${cutDecimalPartIfInteger(getFirstOperand())}^")
     }
 

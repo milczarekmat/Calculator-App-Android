@@ -50,7 +50,7 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: View
             }
         } else {
             insertOperator(operator)
-            clearAndSaveOperand()
+            saveOperand()
         }
     }
 
@@ -61,7 +61,7 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: View
         calculatorViewManager.setIsNewOperation(true)
     }
 
-    protected fun clearAndSaveOperand() {
+    protected fun saveOperand() {
         if (calculatorViewManager.isMainTextViewEmpty()) {
             return
         }
