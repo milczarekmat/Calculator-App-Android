@@ -24,4 +24,17 @@ class SimpleCalculatorActivity : AppCompatActivity() {
         simpleCalculatorClickListener = SimpleCalculatorClickListener(calculatorViewManager)
         simpleCalculatorClickListener.setUpSimpleCalculatorListeners()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (binding.calculatorResultTV.text.isNotEmpty()) {
+            calculatorViewManager.setIsInitState(false)
+            calculatorViewManager.setIsNewOperation(true)
+            simpleCalculatorClickListener.setFirstOperand()
+        }
+
+        if (binding.calculatorOperatorTV.text.isNotEmpty() && binding.calculatorResultTV.text.isEmpty()) {
+                calculatorViewManager.setIsEntryClearPressed(true)
+            }
+    }
 }

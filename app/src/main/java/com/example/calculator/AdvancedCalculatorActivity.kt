@@ -25,4 +25,17 @@ class AdvancedCalculatorActivity : AppCompatActivity() {
         calculatorClickListener.setUpSimpleCalculatorListeners()
         calculatorClickListener.setUpAdvancedCalculatorListeners()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (binding.calculatorResultTV.text.isNotEmpty()) {
+            calculatorViewManager.setIsInitState(false)
+            calculatorViewManager.setIsNewOperation(true)
+            calculatorClickListener.setFirstOperand()
+        }
+
+        if (binding.calculatorOperatorTV.text.isNotEmpty() && binding.calculatorResultTV.text.isEmpty()) {
+            calculatorViewManager.setIsEntryClearPressed(true)
+        }
+    }
 }

@@ -15,6 +15,10 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: View
         }
     }
 
+    fun setFirstOperand() {
+        firstOperand = calculatorViewManager.getCurrentMainText().toDouble()
+    }
+
     protected fun handleDigitClick(digit: String) {
         if (calculatorViewManager.isNewOperation()) {
             calculatorViewManager.clearMainTextView()
