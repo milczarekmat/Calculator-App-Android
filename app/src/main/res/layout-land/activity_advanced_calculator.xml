@@ -11,6 +11,8 @@
         android:id="@+id/calculatorOperatorTV"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:freezesText="true"
         android:text=""
         android:textAlignment="textEnd"
         android:textSize="35sp"
@@ -19,9 +21,12 @@
 
     <TextView
         android:id="@+id/calculatorResultTV"
+        style="@style/mainTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        style="@style/mainTextView"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingStart="4dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,23 +37,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline">
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
-
-
-            <Button
-                android:id="@+id/CEbtn"
-                style="@style/specialBtn"
-                android:text="C/CE" />
 
             <Button
                 android:id="@+id/ACbtn"
@@ -56,48 +54,26 @@
                 android:text="AC" />
 
             <Button
+                android:id="@+id/CEbtn"
+                style="@style/specialBtn"
+                android:text="C/CE" />
+
+            <Button
                 android:id="@+id/backspaceBtn"
                 style="@style/specialBtn"
                 android:text="⌫" />
 
             <Button
-                android:id="@+id/squareBtn"
+                android:id="@+id/percentBtn"
                 style="@style/calculatorBtn"
-                android:text="x^2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/divideBtn"
-                style="@style/calculatorBtn"
-                android:text="/" />
-
-            <Button
-                android:id="@+id/subBtn"
-                style="@style/calculatorBtn"
-                android:text="-" />
-
-            <Button
-                android:id="@+id/multiplyBtn"
-                style="@style/calculatorBtn"
-                android:text="x" />
-
-            <Button
-                android:id="@+id/lnBtn"
-                style="@style/calculatorBtn"
-                android:text="ln" />
+                android:text="%" />
 
             <Button
                 android:id="@+id/powerBtn"
                 style="@style/calculatorBtn"
                 android:text="x^y" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -122,14 +98,19 @@
                 android:text="9" />
 
             <Button
-                android:id="@+id/logBtn"
+                android:id="@+id/squareBtn"
                 style="@style/calculatorBtn"
-                android:text="log" />
+                android:text="x^2" />
 
             <Button
                 android:id="@+id/tanBtn"
                 style="@style/calculatorBtn"
                 android:text="tan" />
+
+            <Button
+                android:id="@+id/logBtn"
+                style="@style/calculatorBtn"
+                android:text="log" />
 
 
         </LinearLayout>
@@ -165,6 +146,11 @@
                 style="@style/calculatorBtn"
                 android:text="sin" />
 
+            <Button
+                android:id="@+id/lnBtn"
+                style="@style/calculatorBtn"
+                android:text="ln" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -189,14 +175,19 @@
                 android:text="3" />
 
             <Button
+                android:id="@+id/divideBtn"
+                style="@style/calculatorBtn"
+                android:text="/" />
+
+            <Button
+                android:id="@+id/subBtn"
+                style="@style/calculatorBtn"
+                android:text="-" />
+
+            <Button
                 android:id="@+id/sqrtBtn"
                 style="@style/calculatorBtn"
                 android:text="sqrt" />
-
-            <Button
-                android:id="@+id/percentBtn"
-                style="@style/calculatorBtn"
-                android:text="%" />
 
         </LinearLayout>
 
@@ -228,6 +219,11 @@
                 android:text="+" />
 
             <Button
+                android:id="@+id/multiplyBtn"
+                style="@style/calculatorBtn"
+                android:text="x" />
+
+            <Button
                 android:id="@+id/equalsBtn"
                 style="@style/calculatorBtn"
                 android:text="=" />
@@ -240,20 +236,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.22" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.17" />
+        app:layout_constraintGuide_percent="0.18" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.07" />
+        app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.92" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

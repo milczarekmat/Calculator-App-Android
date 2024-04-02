@@ -11,6 +11,8 @@
         android:id="@+id/calculatorOperatorTV"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:freezesText="true"
         android:text=""
         android:textAlignment="textEnd"
         android:textSize="35sp"
@@ -21,6 +23,7 @@
         android:id="@+id/calculatorResultTV"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingStart="4dp"
         style="@style/mainTextView"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline">
@@ -69,14 +72,14 @@
                 android:text="C/CE" />
 
             <Button
-                android:id="@+id/divideBtn"
+                android:id="@+id/percentBtn"
                 style="@style/calculatorBtn"
-                android:text="/" />
+                android:text="%" />
 
             <Button
-                android:id="@+id/multiplyBtn"
+                android:id="@+id/squareBtn"
                 style="@style/calculatorBtn"
-                android:text="x" />
+                android:text="x^2" />
 
         </LinearLayout>
 
@@ -93,6 +96,30 @@
                 android:text="cos" />
 
             <Button
+                android:id="@+id/sinBtn"
+                style="@style/calculatorBtn"
+                android:text="sin" />
+
+            <Button
+                android:id="@+id/powerBtn"
+                style="@style/calculatorBtn"
+                android:text="x^y" />
+
+            <Button
+                android:id="@+id/sqrtBtn"
+                style="@style/calculatorBtn"
+                android:text="sqrt" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/tanBtn"
                 style="@style/calculatorBtn"
                 android:text="tan" />
@@ -106,34 +133,11 @@
                 android:id="@+id/logBtn"
                 style="@style/calculatorBtn"
                 android:text="log" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:layout_weight="1"
-            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/percentBtn"
+                android:id="@+id/divideBtn"
                 style="@style/calculatorBtn"
-                android:text="%" />
-
-            <Button
-                android:id="@+id/sqrtBtn"
-                style="@style/calculatorBtn"
-                android:text="sqrt" />
-
-            <Button
-                android:id="@+id/squareBtn"
-                style="@style/calculatorBtn"
-                android:text="x^2" />
-
-            <Button
-                android:id="@+id/powerBtn"
-                style="@style/calculatorBtn"
-                android:text="x^y" />
+                android:text="/" />
         </LinearLayout>
 
         <LinearLayout
@@ -158,9 +162,9 @@
                 android:text="9" />
 
             <Button
-                android:id="@+id/sinBtn"
+                android:id="@+id/multiplyBtn"
                 style="@style/calculatorBtn"
-                android:text="sin" />
+                android:text="x" />
 
         </LinearLayout>
 
@@ -253,14 +257,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.22" />
+        app:layout_constraintGuide_percent="0.19" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.16" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -268,5 +272,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.08" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
