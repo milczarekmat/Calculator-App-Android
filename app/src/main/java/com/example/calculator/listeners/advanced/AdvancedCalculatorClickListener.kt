@@ -1,8 +1,8 @@
-package com.example.calculator.listener.advanced
+package com.example.calculator.listeners.advanced
 
-import com.example.calculator.bindingControllers.ViewManagerStrategy
+import com.example.calculator.viewManagers.AbstractViewManager
 import com.example.calculator.databinding.ActivityAdvancedCalculatorBinding
-import com.example.calculator.listener.simple.SimpleCalculatorClickListener
+import com.example.calculator.listeners.simple.SimpleCalculatorClickListener
 import kotlin.math.cos
 import kotlin.math.ln
 import kotlin.math.log10
@@ -10,7 +10,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.math.tan
 
-class AdvancedCalculatorClickListener(private val calculatorViewManager: ViewManagerStrategy) :
+class AdvancedCalculatorClickListener(private val calculatorViewManager: AbstractViewManager) :
     SimpleCalculatorClickListener(calculatorViewManager) {
 
     private val binding: ActivityAdvancedCalculatorBinding =

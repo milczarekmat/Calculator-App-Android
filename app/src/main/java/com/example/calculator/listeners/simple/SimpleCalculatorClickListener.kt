@@ -1,10 +1,10 @@
-package com.example.calculator.listener.simple
+package com.example.calculator.listeners.simple
 
-import com.example.calculator.bindingControllers.ViewManagerStrategy
+import com.example.calculator.viewManagers.AbstractViewManager
 import com.example.calculator.databinding.ActivitySimpleCalculatorBinding
 import com.example.calculator.logic.CalculatorLogic
 
-open class SimpleCalculatorClickListener(private val calculatorViewManager: ViewManagerStrategy) {
+open class SimpleCalculatorClickListener(private val calculatorViewManager: AbstractViewManager) {
     private lateinit var binding: ActivitySimpleCalculatorBinding
     private var firstOperand: Double = 0.0
     private val calculatorLogic = CalculatorLogic()
@@ -98,13 +98,14 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: View
         }
 
         val mainText = calculatorViewManager.getCurrentMainText()
+        val cutText = mainText.substring(0, mainText.length - 1)
 
         calculatorViewManager.setMainTextView(
-            mainText.substring(0, mainText.length - 1)
+            cutText
         )
 
-        if (!calculatorViewManager.isMainTextViewEmpty() && mainText.last() == '.') {
-            calculatorViewManager.setMainTextView(mainText.substring(0, mainText.length - 1))
+        if (!calculatorViewManager.isMainTextViewEmpty() && cutText.last() == '.') {
+            calculatorViewManager.setMainTextView(cutText.substring(0, cutText.length - 1))
         }
 
         if (calculatorViewManager.getCurrentMainText().isEmpty()) {

@@ -1,4 +1,4 @@
-package com.example.calculator
+package com.example.calculator.activities
 
 import android.content.Intent
 import android.os.Bundle

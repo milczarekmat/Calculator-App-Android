@@ -1,6 +1,6 @@
-package com.example.calculator.bindingControllers
+package com.example.calculator.viewManagers
 
-abstract class ViewManagerStrategy {
+abstract class AbstractViewManager {
     private var isInitState: Boolean = true
     private var isNewOperation: Boolean = false
     private var isEntryClearPressed: Boolean = false

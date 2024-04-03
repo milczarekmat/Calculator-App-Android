@@ -1,11 +1,11 @@
-package com.example.calculator.bindingControllers.advanced
+package com.example.calculator.viewManagers.advanced
 
-import com.example.calculator.bindingControllers.ViewManagerStrategy
+import com.example.calculator.viewManagers.AbstractViewManager
 import com.example.calculator.databinding.ActivityAdvancedCalculatorBinding
 
 class AdvancedCalculatorViewManager(
     private val binding: ActivityAdvancedCalculatorBinding,
-) : ViewManagerStrategy() {
+) : AbstractViewManager() {
     override fun setMainTextView(value: String) {
         binding.calculatorResultTV.text = value
     }

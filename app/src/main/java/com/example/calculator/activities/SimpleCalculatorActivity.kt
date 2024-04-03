@@ -1,16 +1,16 @@
-package com.example.calculator
+package com.example.calculator.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.calculator.bindingControllers.ViewManagerStrategy
-import com.example.calculator.bindingControllers.simple.SimpleCalculatorViewManager
+import com.example.calculator.viewManagers.AbstractViewManager
+import com.example.calculator.viewManagers.simple.SimpleCalculatorViewManager
 import com.example.calculator.databinding.ActivitySimpleCalculatorBinding
-import com.example.calculator.listener.simple.SimpleCalculatorClickListener
+import com.example.calculator.listeners.simple.SimpleCalculatorClickListener
 
 class SimpleCalculatorActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySimpleCalculatorBinding
-    private lateinit var calculatorViewManager: ViewManagerStrategy
+    private lateinit var calculatorViewManager: AbstractViewManager
     private lateinit var simpleCalculatorClickListener: SimpleCalculatorClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
