@@ -1,6 +1,7 @@
 package com.example.calculator.activities
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculator.viewManagers.AbstractViewManager
@@ -21,11 +22,15 @@ class AdvancedCalculatorActivity : AppCompatActivity() {
 
         calculatorViewManager = AdvancedCalculatorViewManager(binding)
 
-        calculatorClickListener = AdvancedCalculatorClickListener(calculatorViewManager)
+        calculatorClickListener = AdvancedCalculatorClickListener(calculatorViewManager, this)
         calculatorClickListener.setUpSimpleCalculatorListeners()
         calculatorClickListener.setUpAdvancedCalculatorListeners()
     }
 
+//    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+//        super.onSaveInstanceState(outState, outPersistentState)
+//        outState.putString("")
+//    }
     override fun onResume() {
         super.onResume()
         if (binding.calculatorResultTV.text.isNotEmpty()) {

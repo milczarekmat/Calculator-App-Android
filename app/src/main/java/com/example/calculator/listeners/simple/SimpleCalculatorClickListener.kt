@@ -1,13 +1,17 @@
 package com.example.calculator.listeners.simple
 
+import android.content.Context
 import com.example.calculator.viewManagers.AbstractViewManager
 import com.example.calculator.databinding.ActivitySimpleCalculatorBinding
 import com.example.calculator.logic.CalculatorLogic
 
-open class SimpleCalculatorClickListener(private val calculatorViewManager: AbstractViewManager) {
+open class SimpleCalculatorClickListener(
+    private val calculatorViewManager: AbstractViewManager,
+    context: Context
+) {
     private lateinit var binding: ActivitySimpleCalculatorBinding
     private var firstOperand: Double = 0.0
-    private val calculatorLogic = CalculatorLogic()
+    private val calculatorLogic = CalculatorLogic(context)
 
     init {
         if (calculatorViewManager.getBinding() is ActivitySimpleCalculatorBinding) {
@@ -223,9 +227,12 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: Abst
         }
 
         binding.zeroBtn.setOnClickListener {
-            if (!calculatorViewManager.isMainTextViewEmpty() && !calculatorViewManager.isNewOperation()) {
-                handleDigitClick("0")
-            }
+            if (!calculatorViewManager.isMainTextViewEmpty() && calculatorViewManager.getCurrentMainText().length == 1 && calculatorViewManager.getCurrentMainText()
+                    .last() == '0'
+            )
+                return@setOnClickListener
+
+            handleDigitClick("0")
         }
 
         binding.addBtn.setOnClickListener {

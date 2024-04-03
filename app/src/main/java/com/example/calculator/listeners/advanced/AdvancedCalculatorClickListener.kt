@@ -1,5 +1,7 @@
 package com.example.calculator.listeners.advanced
 
+import android.content.Context
+import android.widget.Toast
 import com.example.calculator.viewManagers.AbstractViewManager
 import com.example.calculator.databinding.ActivityAdvancedCalculatorBinding
 import com.example.calculator.listeners.simple.SimpleCalculatorClickListener
@@ -10,8 +12,11 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.math.tan
 
-class AdvancedCalculatorClickListener(private val calculatorViewManager: AbstractViewManager) :
-    SimpleCalculatorClickListener(calculatorViewManager) {
+class AdvancedCalculatorClickListener(
+    private val calculatorViewManager: AbstractViewManager,
+    private val context: Context
+) :
+    SimpleCalculatorClickListener(calculatorViewManager, context) {
 
     private val binding: ActivityAdvancedCalculatorBinding =
         calculatorViewManager.getBinding() as ActivityAdvancedCalculatorBinding
@@ -54,9 +59,16 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: Abstrac
         }
 
         binding.zeroBtn.setOnClickListener {
-            if (!calculatorViewManager.isMainTextViewEmpty() && !calculatorViewManager.isNewOperation()) {
-                handleDigitClick("0")
-            }
+//            if (!calculatorViewManager.isMainTextViewEmpty() && !calculatorViewManager.isNewOperation()) {
+//                handleDigitClick("0")
+//            }
+
+            if (!calculatorViewManager.isMainTextViewEmpty() && calculatorViewManager.getCurrentMainText().length == 1 && calculatorViewManager.getCurrentMainText()
+                    .last() == '0'
+            )
+                return@setOnClickListener
+
+            handleDigitClick("0")
         }
 
         binding.addBtn.setOnClickListener {
@@ -181,6 +193,12 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: Abstrac
         }
 
         val value = calculatorViewManager.getCurrentMainText().toDouble()
+
+        if (value < 0) {
+            Toast.makeText(context, "Nie można pierwiastkować liczby ujemnej", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
         val result = sqrt(value)
 
         setResult(result)
@@ -191,7 +209,15 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: Abstrac
             return
         }
 
+
         val value = calculatorViewManager.getCurrentMainText().toDouble()
+
+        if (value <= 0) {
+            Toast.makeText(context, "Nie mozna uzywac logarytmow dla liczby ujemnej", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
         val result = ln(value)
 
         setResult(result)
@@ -203,6 +229,12 @@ class AdvancedCalculatorClickListener(private val calculatorViewManager: Abstrac
         }
 
         val value = calculatorViewManager.getCurrentMainText().toDouble()
+        if (value <= 0) {
+            Toast.makeText(context, "Nie mozna uzywac logarytmow dla liczby ujemnej", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
         val result = log10(value)
 
         setResult(result)
