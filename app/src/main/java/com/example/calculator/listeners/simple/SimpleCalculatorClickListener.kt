@@ -37,6 +37,10 @@ open class SimpleCalculatorClickListener(private val calculatorViewManager: Abst
             return
         }
 
+        if (calculatorViewManager.isEntryClearPressed()) {
+            return
+        }
+
         if (calculatorViewManager.isOperatorInserted()) {
             if (calculatorViewManager.isNewOperation()) { // replace operator
                 val currentOperator = calculatorViewManager.getCurrentOperator()
