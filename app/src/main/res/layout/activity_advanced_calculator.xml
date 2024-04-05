@@ -21,10 +21,10 @@
 
     <TextView
         android:id="@+id/calculatorResultTV"
+        style="@style/mainTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingStart="4dp"
-        style="@style/mainTextView"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

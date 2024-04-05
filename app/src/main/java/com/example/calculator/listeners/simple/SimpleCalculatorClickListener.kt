@@ -19,8 +19,9 @@ open class SimpleCalculatorClickListener(
         }
     }
 
-    fun setFirstOperand() {
-        firstOperand = calculatorViewManager.getCurrentMainText().toDouble()
+
+    fun setFirstOperand(value: Double) {
+        firstOperand = value
     }
 
     protected fun handleDigitClick(digit: String) {
@@ -32,7 +33,7 @@ open class SimpleCalculatorClickListener(
         calculatorViewManager.setIsEntryClearPressed(false)
     }
 
-    protected fun getFirstOperand(): Double {
+    fun getFirstOperand(): Double {
         return firstOperand
     }
 

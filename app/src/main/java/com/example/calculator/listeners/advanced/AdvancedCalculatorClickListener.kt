@@ -213,7 +213,7 @@ class AdvancedCalculatorClickListener(
         val value = calculatorViewManager.getCurrentMainText().toDouble()
 
         if (value <= 0) {
-            Toast.makeText(context, "Nie mozna uzywac logarytmow dla liczby ujemnej", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Nie można używać logarytmów dla liczby ujemnej lub zera", Toast.LENGTH_SHORT)
                 .show()
             return
         }
@@ -230,7 +230,7 @@ class AdvancedCalculatorClickListener(
 
         val value = calculatorViewManager.getCurrentMainText().toDouble()
         if (value <= 0) {
-            Toast.makeText(context, "Nie mozna uzywac logarytmow dla liczby ujemnej", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Nie można używać logarytmów dla liczby ujemnej lub zera", Toast.LENGTH_SHORT)
                 .show()
             return
         }

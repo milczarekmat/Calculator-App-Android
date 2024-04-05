@@ -1,7 +1,6 @@
 package com.example.calculator.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculator.viewManagers.AbstractViewManager
@@ -13,7 +12,7 @@ class AdvancedCalculatorActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdvancedCalculatorBinding
     private lateinit var calculatorViewManager: AbstractViewManager
-    private lateinit var calculatorClickListener: AdvancedCalculatorClickListener
+    private lateinit var advancedCalculatorClickListener: AdvancedCalculatorClickListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdvancedCalculatorBinding.inflate(layoutInflater)
@@ -22,25 +21,31 @@ class AdvancedCalculatorActivity : AppCompatActivity() {
 
         calculatorViewManager = AdvancedCalculatorViewManager(binding)
 
-        calculatorClickListener = AdvancedCalculatorClickListener(calculatorViewManager, this)
-        calculatorClickListener.setUpSimpleCalculatorListeners()
-        calculatorClickListener.setUpAdvancedCalculatorListeners()
+        advancedCalculatorClickListener = AdvancedCalculatorClickListener(calculatorViewManager, this)
+        advancedCalculatorClickListener.setUpSimpleCalculatorListeners()
+        advancedCalculatorClickListener.setUpAdvancedCalculatorListeners()
     }
 
-//    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-//        super.onSaveInstanceState(outState, outPersistentState)
-//        outState.putString("")
-//    }
-    override fun onResume() {
-        super.onResume()
-        if (binding.calculatorResultTV.text.isNotEmpty()) {
-            calculatorViewManager.setIsInitState(false)
-            calculatorViewManager.setIsNewOperation(true)
-            calculatorClickListener.setFirstOperand()
-        }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
 
-        if (binding.calculatorOperatorTV.text.isNotEmpty() && binding.calculatorResultTV.text.isEmpty()) {
-            calculatorViewManager.setIsEntryClearPressed(true)
-        }
+        calculatorViewManager.setMainTextView(savedInstanceState.getString("result") ?: "")
+        calculatorViewManager.setOperator(savedInstanceState.getString("operator") ?: "")
+        calculatorViewManager.setIsInitState(savedInstanceState.getBoolean("isInitState"))
+        calculatorViewManager.setIsNewOperation(savedInstanceState.getBoolean("isNewOperation"))
+        calculatorViewManager.setIsEntryClearPressed(savedInstanceState.getBoolean("isEntryClearPressed"))
+        advancedCalculatorClickListener.setFirstOperand(savedInstanceState.getDouble("firstOperand"))
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("result", binding.calculatorResultTV.text.toString())
+        outState.putString("operator", binding.calculatorOperatorTV.text.toString())
+        outState.putBoolean("isInitState", calculatorViewManager.isInitState())
+        outState.putBoolean("isNewOperation", calculatorViewManager.isNewOperation())
+        outState.putBoolean("isEntryClearPressed", calculatorViewManager.isEntryClearPressed())
+        outState.putDouble("firstOperand", advancedCalculatorClickListener.getFirstOperand())
     }
 }

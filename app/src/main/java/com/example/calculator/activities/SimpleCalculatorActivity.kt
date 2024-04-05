@@ -22,31 +22,31 @@ class SimpleCalculatorActivity : AppCompatActivity() {
 
         calculatorViewManager = SimpleCalculatorViewManager(binding)
 
-//        var result = savedInstanceState?.getString("result")
-//        calculatorViewManager.setMainTextView(result ?: "")
-
-
         simpleCalculatorClickListener = SimpleCalculatorClickListener(calculatorViewManager, this)
         simpleCalculatorClickListener.setUpSimpleCalculatorListeners()
     }
 
-//    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-//        super.onSaveInstanceState(outState, outPersistentState)
-//
-//        outState.putString("result", binding.calculatorResultTV.text.toString())
-//        outState.putString("operator", binding.calculatorOperatorTV.text.toString())
-//    }
 
-//    override fun onResume() {
-//        super.onResume()
-//        if (binding.calculatorResultTV.text.isNotEmpty()) {
-//            calculatorViewManager.setIsInitState(false)
-//            calculatorViewManager.setIsNewOperation(true)
-//            simpleCalculatorClickListener.setFirstOperand()
-//        }
-//
-//        if (binding.calculatorOperatorTV.text.isNotEmpty() && binding.calculatorResultTV.text.isEmpty()) {
-//                calculatorViewManager.setIsEntryClearPressed(true)
-//            }
-//    }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        calculatorViewManager.setMainTextView(savedInstanceState.getString("result") ?: "")
+        calculatorViewManager.setOperator(savedInstanceState.getString("operator") ?: "")
+        calculatorViewManager.setIsInitState(savedInstanceState.getBoolean("isInitState"))
+        calculatorViewManager.setIsNewOperation(savedInstanceState.getBoolean("isNewOperation"))
+        calculatorViewManager.setIsEntryClearPressed(savedInstanceState.getBoolean("isEntryClearPressed"))
+        simpleCalculatorClickListener.setFirstOperand(savedInstanceState.getDouble("firstOperand"))
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("result", binding.calculatorResultTV.text.toString())
+        outState.putString("operator", binding.calculatorOperatorTV.text.toString())
+        outState.putBoolean("isInitState", calculatorViewManager.isInitState())
+        outState.putBoolean("isNewOperation", calculatorViewManager.isNewOperation())
+        outState.putBoolean("isEntryClearPressed", calculatorViewManager.isEntryClearPressed())
+        outState.putDouble("firstOperand", simpleCalculatorClickListener.getFirstOperand())
+    }
 }

@@ -21,6 +21,7 @@ class CalculatorLogic(private val context: Context) {
             "/" -> {
                 if (secondOperand == 0.0) {
                     showToast("Nie mozna dzielic przez zero")
+                    return firstOperand
                 }
                 return firstOperand / secondOperand
             }
