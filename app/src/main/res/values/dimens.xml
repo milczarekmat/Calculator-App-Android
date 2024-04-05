@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="tablet_main_activity_btn_height">65dp</dimen>
-    <dimen name="phone_main_activity_btn_height">wrap_content</dimen>
 </resources>
