@@ -23,7 +23,7 @@
     <Button
         android:id="@+id/simpleCalculatorBtn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/phone_main_activity_btn_height"
         android:text="Prosty"
         app:layout_constraintBottom_toTopOf="@+id/guidelineH2"
         app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
@@ -33,7 +33,7 @@
     <Button
         android:id="@+id/advancedBtn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/phone_main_activity_btn_height"
         android:text="Zaawansowany"
         app:layout_constraintBottom_toTopOf="@+id/guidelineH3"
         app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
@@ -43,7 +43,7 @@
     <Button
         android:id="@+id/aboutBtn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/phone_main_activity_btn_height"
         android:text="Informacje"
         app:layout_constraintBottom_toTopOf="@+id/guidelineH4"
         app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
@@ -54,7 +54,7 @@
     <Button
         android:id="@+id/exitBtn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/phone_main_activity_btn_height"
         android:text="Wyjdź"
         app:layout_constraintBottom_toTopOf="@+id/guidelineH5"
         app:layout_constraintEnd_toStartOf="@+id/guidelineV2"
